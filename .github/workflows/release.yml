@@ -26,7 +26,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.x
+        dotnet-version: 8.0.x
     - name: Test
       run: dotnet test --verbosity normal
 
@@ -40,7 +40,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.x
+        dotnet-version: 8.0.x
     - name: Publish
       run: dotnet publish src/BaGet --configuration Release --output artifacts
     - name: Upload
@@ -49,22 +49,22 @@ jobs:
         name: BaGet
         path: artifacts
 
-  release_packages:
-    needs: verify
-    name: Release packages to nuget.org
-    runs-on: ubuntu-latest
+  # release_packages:
+  #   needs: verify
+  #   name: Release packages to nuget.org
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.x
-    - name: Pack
-      run: dotnet pack --configuration Release --output artifacts
-    - name: Push
-      run: dotnet nuget push "*" -s ${{ github.event.inputs.packageSource }} -k ${{secrets.NUGET_API_KEY}}
-      working-directory: artifacts
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Setup .NET
+  #     uses: actions/setup-dotnet@v1
+  #     with:
+  #       dotnet-version: 8.0.x
+  #   - name: Pack
+  #     run: dotnet pack --configuration Release --output artifacts
+  #   - name: Push
+  #     run: dotnet nuget push "*" -s ${{ github.event.inputs.packageSource }} -k ${{secrets.NUGET_API_KEY}}
+  #     working-directory: artifacts
 
   release_docker_image:
     needs: verify
