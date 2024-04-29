@@ -1,11 +1,16 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: 'Release version'
+        required: true
+        default: '1.0.0-preview-arm-image'
+		
+env:
+  Version: ${{ github.event.inputs.releaseVersion }}
+  
 jobs:
 
   build:
@@ -15,4 +20,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --push --file Dockerfile --tag sarvesh2021/baget-v2:${{ github.event.inputs.releaseVersion }} --tag sarvesh2021/baget-v2:latest
