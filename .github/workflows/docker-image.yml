@@ -7,7 +7,7 @@ on:
         description: 'Release version'
         required: true
         default: '1.0.0-preview-arm-image'
-		
+
 env:
   Version: ${{ github.event.inputs.releaseVersion }}
   
