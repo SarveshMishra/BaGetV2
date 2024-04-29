@@ -20,4 +20,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --push --file Dockerfile --tag sarvesh2021/baget-v2:${{ github.event.inputs.releaseVersion }} --tag sarvesh2021/baget-v2:latest
+      run: docker buildx build --platform=linux/amd64,linux/arm64 --push --file Dockerfile --tag sarvesh2021/baget-v2:${{ github.event.inputs.releaseVersion }} --tag sarvesh2021/baget-v2:latest .
